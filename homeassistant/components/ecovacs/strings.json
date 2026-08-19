@@ -350,6 +350,9 @@
     }
   },
   "exceptions": {
+    "set_area_parameter_not_supported": {
+      "message": "Setting area parameters is not supported by this mower"
+    },
     "vacuum_raw_get_positions_not_supported": {
       "message": "Retrieving the positions of the chargers and the device itself is not supported"
     },
