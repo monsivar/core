@@ -372,9 +372,34 @@
     }
   },
   "services": {
-    "raw_get_positions": {
-      "description": "Retrieves a raw response containing the positions of the chargers and the device itself.",
-      "name": "Get raw positions"
-    }
+  "raw_get_positions": {
+    "description": "Retrieves a raw response containing the positions of the chargers and the device itself.",
+    "name": "Get raw positions"
+  },
+  "set_area_parameter": {
+    "description": "Sets mowing parameters for a specific mower area.",
+    "fields": {
+      "area_id": {
+        "description": "The ID of the mower area to configure.",
+        "name": "Area ID"
+      },
+      "mow_height_level": {
+        "description": "The mowing height level for the area.",
+        "name": "Mowing height level"
+      },
+      "cut_mode": {
+        "description": "The cutting mode for the area.",
+        "name": "Cut mode"
+      },
+      "obstacle_height": {
+        "description": "The obstacle height setting for the area.",
+        "name": "Obstacle height"
+      },
+      "angle": {
+        "description": "The mowing angle for the area.",
+        "name": "Angle"
+      }
+    },
+    "name": "Set area parameters"
   }
 }
