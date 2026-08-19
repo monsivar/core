@@ -141,6 +141,12 @@
       }
     },
     "number": {
+      "area_mowing_angle": {
+        "name": "Area {area_id} mowing angle"
+      },
+      "area_mowing_height": {
+        "name": "Area {area_id} mowing height"
+      },
       "clean_count": {
         "name": "Clean count"
       },
@@ -155,6 +161,21 @@
       }
     },
     "select": {
+      "area_mowing_speed": {
+        "name": "Area {area_id} mowing speed",
+        "state": {
+          "efficient": "Efficient",
+          "gentle": "Gentle"
+        }
+      },
+      "area_obstacle_mode": {
+        "name": "Area {area_id} obstacle avoidance",
+        "state": {
+          "high_grass": "High grass environment <20 cm",
+          "normal": "Normal environment <15 cm",
+          "short_grass": "Flat terrain with short grass <10 cm"
+        }
+      },
       "active_map": {
         "name": "Active map"
       },
