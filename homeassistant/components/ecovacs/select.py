@@ -18,6 +18,13 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from . import EcovacsConfigEntry
+from .area_parameter import (
+    CUT_MODE_EFFICIENT,
+    CUT_MODE_GENTLE,
+    OBSTACLE_MODE_HIGH_GRASS,
+    OBSTACLE_MODE_NORMAL,
+    OBSTACLE_MODE_SHORT_GRASS,
+)
 from .entity import (
     EcovacsCapabilityEntityDescription,
     EcovacsDescriptionEntity,
@@ -38,6 +45,27 @@ class EcovacsSelectEntityDescription[EventT: Event](
     set_option_fn: Callable[[CapabilitySetTypes, str], CommandWithMessageHandling] = (
         lambda cap, option: cap.set(option)
     )
+
+AREA_MOWING_SPEED_DESCRIPTION = SelectEntityDescription(
+    key="area_mowing_speed",
+    translation_key="area_mowing_speed",
+    entity_category=EntityCategory.CONFIG,
+    options=[
+        CUT_MODE_GENTLE,
+        CUT_MODE_EFFICIENT,
+    ],
+)
+
+AREA_OBSTACLE_MODE_DESCRIPTION = SelectEntityDescription(
+    key="area_obstacle_mode",
+    translation_key="area_obstacle_mode",
+    entity_category=EntityCategory.CONFIG,
+    options=[
+        OBSTACLE_MODE_SHORT_GRASS,
+        OBSTACLE_MODE_NORMAL,
+        OBSTACLE_MODE_HIGH_GRASS,
+    ],
+)
 
 
 ENTITY_DESCRIPTIONS: tuple[EcovacsSelectEntityDescription, ...] = (
