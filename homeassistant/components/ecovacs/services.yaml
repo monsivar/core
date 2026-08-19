@@ -1,5 +1,50 @@
+
 raw_get_positions:
   target:
     entity:
       domain: vacuum
       integration: ecovacs
+
+set_area_parameter:
+  target:
+    entity:
+      domain: lawn_mower
+      integration: ecovacs
+  fields:
+    area_id:
+      required: true
+      example: "2"
+      selector:
+        text:
+    mow_height_level:
+      required: true
+      example: 10
+      selector:
+        number:
+          min: 0
+          step: 1
+          mode: box
+    cut_mode:
+      required: true
+      example: 7
+      selector:
+        number:
+          min: 0
+          step: 1
+          mode: box
+    obstacle_height:
+      required: true
+      example: 1
+      selector:
+        number:
+          min: 0
+          step: 1
+          mode: box
+    angle:
+      required: true
+      example: 136
+      selector:
+        number:
+          min: 0
+          step: 1
+          mode: box
