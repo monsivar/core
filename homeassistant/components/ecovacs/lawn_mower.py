@@ -15,9 +15,11 @@ from homeassistant.components.lawn_mower import (
     LawnMowerEntityFeature,
 )
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import ServiceValidationError
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from . import EcovacsConfigEntry
+from .const import DOMAIN
 from .entity import EcovacsEntity
 
 _LOGGER = logging.getLogger(__name__)
@@ -97,3 +99,28 @@ class EcovacsMower(
     async def async_dock(self) -> None:
         """Parks the mower until next schedule."""
         await self._device.execute_command(self._capability.charge.execute())
+
+    async def async_set_area_parameter(
+        self,
+        area_id: str,
+        mow_height_level: int,
+        cut_mode: int,
+        obstacle_height: int,
+        angle: int,
+    ) -> None:
+        """Set parameters for a mower area."""
+        if (area_parameter := self._capability.settings.area_parameter) is None:
+            raise ServiceValidationError(
+                translation_domain=DOMAIN,
+                translation_key="set_area_parameter_not_supported",
+            )
+
+        await self._device.execute_command(
+            area_parameter.execute(
+                area_id,
+                mow_height_level,
+                cut_mode,
+                obstacle_height,
+                angle,
+            )
+        )
