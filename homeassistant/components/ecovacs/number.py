@@ -15,11 +15,12 @@ from homeassistant.components.number import (
     NumberEntityDescription,
     NumberMode,
 )
-from homeassistant.const import DEGREE, EntityCategory
+from homeassistant.const import DEGREE, EntityCategory, UnitOfLength
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from . import EcovacsConfigEntry
+from .area_parameter import MOW_HEIGHT_MAX, MOW_HEIGHT_MIN, MOW_HEIGHT_STEP
 from .entity import (
     EcovacsCapabilityEntityDescription,
     EcovacsDescriptionEntity,
@@ -38,6 +39,15 @@ class EcovacsNumberEntityDescription[EventT: Event](
     native_max_value_fn: Callable[[EventT], float | int | None] = lambda _: None
     value_fn: Callable[[EventT], float | None]
 
+AREA_MOWING_HEIGHT_DESCRIPTION = NumberEntityDescription(
+    key="area_mowing_height",
+    translation_key="area_mowing_height",
+    entity_category=EntityCategory.CONFIG,
+    native_min_value=MOW_HEIGHT_MIN,
+    native_max_value=MOW_HEIGHT_MAX,
+    native_step=MOW_HEIGHT_STEP,
+    native_unit_of_measurement=UnitOfLength.CENTIMETERS,
+)
 
 ENTITY_DESCRIPTIONS: tuple[EcovacsNumberEntityDescription, ...] = (
     EcovacsNumberEntityDescription[VolumeEvent](
