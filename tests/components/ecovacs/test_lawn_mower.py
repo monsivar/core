@@ -4,8 +4,8 @@ from dataclasses import dataclass
 
 from deebot_client.command import Command
 from deebot_client.commands.json import Charge, CleanV2
-from deebot_client.events import StateEvent
-from deebot_client.models import CleanAction, State
+from deebot_client.events import RoomsEvent, StateEvent
+from deebot_client.models import CleanAction, Room, State
 import pytest
 from syrupy.assertion import SnapshotAssertion
 
@@ -71,6 +71,36 @@ async def test_lawn_mower(
 
     assert (state := hass.states.get(state.entity_id))
     assert state.state == LawnMowerActivity.DOCKED
+
+
+@pytest.mark.parametrize("device_fixture", ["2i0fns"])
+async def test_lawn_mower_areas(
+    hass: HomeAssistant,
+    controller: EcovacsController,
+) -> None:
+    """Test lawn mower areas."""
+    entity_id = "lawn_mower.goat_o1200"
+    device = controller.devices[0]
+
+    await notify_and_wait(
+        hass,
+        device.events,
+        RoomsEvent(
+            map_id="",
+            rooms=[
+                Room(name="Østkanten", id=4, coordinates=""),
+                Room(name="Sentrum", id=1, coordinates=""),
+                Room(name="Vestkanten", id=2, coordinates=""),
+            ],
+        ),
+    )
+
+    assert (state := hass.states.get(entity_id))
+    assert state.attributes["rooms"] == {
+        "ostkanten": 4,
+        "sentrum": 1,
+        "vestkanten": 2,
+    }
 
 
 @dataclass(frozen=True)
